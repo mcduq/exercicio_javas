@@ -26,23 +26,34 @@ public class CaminhoArquivo {
         return arquivo;
     }
 
-    public static CaminhoArquivo getInstance(Integer id) {
-        String b = "/tmp/";
-        String d = null;
-        if (id <= 1000) {
-            d = b + id;
-        } else {
-            int i = id;
-            boolean f = true;
-            while (f) {
-                if (id <= (i * 1000)) {
-                    d = b + i;
-                    f = false;
-                }
-                i++;
-            }
+    public static CaminhoArquivo getInstance(Integer id) {     
+
+        if(id == null){
+            return null;
+
         }
-        return new CaminhoArquivo(Paths.get(d), Paths.get(d));
+        
+        String caminho = "/tmp/";
+        String arquivo = "";
+        String diretorio = "";
+        BigDecimal divisor = new BigDecimal(1000);
+        BigDecimal  caminhoInterno = new BigDecimal(1);
+        BigDecimal idArquivo = new BigDecimal(id);
+       // BigDecimal divisor = new BigDecimal(1000);
+
+        caminhoInterno = idArquivo.divide(divisor, 0, RoundingMode.UP);       
+        diretorio =  caminho  + caminhoInterno.intValue();
+      /*   if (idArquivo.compareTo(divisor)<0) {      
+            //se for igual retorna 0
+            //se o numero for menor que o comparado é negativo
+            //se o numero for maior que o comparado é positivo      
+           // diretorio = caminho + "1";
+        } else {            
+           
+        }*/
+
+        arquivo = diretorio + "/" + idArquivo.intValue();
+        return new CaminhoArquivo(Paths.get(diretorio), Paths.get(arquivo));
 
     }
 
